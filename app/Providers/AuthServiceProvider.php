@@ -9,7 +9,6 @@ class AuthServiceProvider extends ServiceProvider
 {
     /**
      * The policy mappings for the application.
-     *
      * @var array
      */
     protected $policies = [
@@ -18,7 +17,6 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
      * @return void
      */
     public function boot()
@@ -26,5 +24,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        /*Gate::define('books.manage', function ($user, $book) {
+        # In order for this gate the pass, the following must be true
+        return $user->id === $book->user_id;
+    });*/
     }
 }

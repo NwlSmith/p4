@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function games()
+    {
+        # Account has many Games
+        # Define a many-to-many relationship.
+        return $this->belongsToMany('App\Game')->withTimestamps();
+    }
 }
