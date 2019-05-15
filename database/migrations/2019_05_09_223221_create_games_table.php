@@ -26,6 +26,7 @@ class CreateGamesTable extends Migration
             $table->unsignedTinyInteger('c1');
             $table->unsignedTinyInteger('c2');
             $table->unsignedTinyInteger('c3');
+            $table->unsignedTinyInteger('winner')->default(0);
         });
     }
 

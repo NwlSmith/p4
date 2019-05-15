@@ -16,7 +16,7 @@
              alt='Logo'
              id='logo'></a>
     <h1>Tic Tac Toe</h1>
-    <h1>NAVIGATION HERE</h1>
+    <h1>Wins: {{ $user->wins }} Losses: {{ $user->losses }}</h1>
     @if( Auth::check() )
         <form method='POST' id='logout' action='/logout'>
             {{ csrf_field() }}

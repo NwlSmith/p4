@@ -18,12 +18,13 @@ class GamesTableSeeder extends Seeder
             # player1 player2 active(bool) player1_turn(bool)
             # a1 a2 a3 b1 b2 b3 c1 c2 c3
             # 0 = empty, 1 = player1, 2 = player2
-            [ 1, 2, true, false, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [ 2, 3, true, true, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-            [ 3, 4, true, false, 0, 1, 0, 0, 2, 0, 0, 0, 0],
-            [ 4, 5, true, true, 2, 1, 0, 0, 2, 0, 0, 0, 0],
-            [ 5, 1, true, false, 2, 1, 1, 0, 2, 0, 0, 0, 0],
-            [ 1, 3, true, false, 2, 1, 1, 0, 2, 0, 0, 0, 2],
+            [ 1, 2, true, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [ 2, 3, true, true, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+            [ 3, 4, true, false, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0],
+            [ 4, 5, true, true, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0],
+            [ 5, 1, true, false, 2, 1, 1, 0, 2, 0, 0, 0, 0, 0],
+            [ 1, 3, true, false, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0],
+            [ 1, 4, false, false, 2, 1, 1, 0, 2, 0, 0, 0, 2, 1],
         ];
 
         $count = count($games);
@@ -49,6 +50,7 @@ class GamesTableSeeder extends Seeder
             $game->c1 = $gameData[10];
             $game->c2 = $gameData[11];
             $game->c3 = $gameData[12];
+            $game->winner = $gameData[13];
 
             $game->save();
             $count--;

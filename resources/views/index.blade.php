@@ -11,13 +11,16 @@
         </h3>
         <ul>
             <!-- For loop for each player-->
-            <li id='player'>
-                <h5>Name</h5>
-                <p class='playerdesc'>
-                    Num wins Num losses<br>
-                    start game/already playing game
-                </p>
-            </li>
+            @foreach($players as $player)
+                <li id='player'>
+                    <h5>{{ $player->name }}</h5>
+                    <p class='playerdesc'>
+                        Wins: {{ $player->wins }} Losses: {{ $player->losses }}<br>
+
+                        Challenge This player!
+                    </p>
+                </li>
+            @endforeach
         </ul>
     </div>
     <div id='activeList'>
@@ -26,13 +29,16 @@
         </h3>
         <ul>
             <!-- For loop for each active game, ordered ascending by last move-->
-            <li id='activeGame'>
-                <h5>Other Player's name</h5>
+            @foreach($gamesActive as $activeGame)
+            <li id='gamesActive'>
+                <h5>{{ $activeGame->getOtherPlayer($user->id)->name }}</h5>
                 <p class='playerdesc'>
+                    {{ $activeGame->checkIfUserTurn($user->id) ? 'Your turn!' : 'Waiting for other player' }}
                     Their turn or your turn - special styling if your turn<br>
                     preview of board?
                 </p>
             </li>
+            @endforeach
         </ul>
     </div>
     <div id='finishedList'>
@@ -41,13 +47,16 @@
         </h3>
         <ul>
             <!-- For loop for each finished game, ordered descending by last move (end time) -->
-            <li id='finishedGame'>
-                <h5>Other Player's name</h5>
-                <p class='playerdesc'>
-                    Win or loss<br>
-                    preview of board?
-                </p>
-            </li>
+            @foreach($gamesPast as $pastGame)
+                <li id='finishedGame'>
+                    <h5>{{ $pastGame->getOtherPlayer($user->id)->name }}</h5>
+                    <p class='playerdesc'>
+                        {{ $pastGame->checkIfUserWon($user->id) ? 'You Won!' : 'You Lost' }}
+                        <br>
+                        preview of board?
+                    </p>
+                </li>
+            @endforeach
         </ul>
     </div>
 @endsection

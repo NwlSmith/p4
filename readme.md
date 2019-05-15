@@ -41,9 +41,9 @@ Routes
         see game and not make moves
         edit/make move if it is your turn
         see past games
-    * index - show players and games
+    * index - show players and games - done
     * create game C
-    * show game R
+    * show game R - html
     * edit game
     * update game U
     * delete game yes if draw?
