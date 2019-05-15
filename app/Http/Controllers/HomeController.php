@@ -44,28 +44,29 @@ class HomeController extends Controller
         # from active games, get list of players with active games, exclude those from players list
 
         $user = $request->user();
+        //$games = $user->games->toArray();
+        $players = User::where('id', '!=', $user->id)->get();
 
-
-        dd($user->games);
-
-        if ($user->games) {
+        if (count($games = $user->games->toArray()) > 0) {
             # retrieve all games
-            $games = $user->games->orderBy('updated_at')->pluck('id')->toArray();
+            //$games = $games->orderBy('updated_at')->pluck('id')->toArray();
             $gamesActive = [];
             $gamesPast = [];
-
             # retrieve all games and sort them
             foreach ($games as $game) {
-                if ($game->active) {
-                    array_push($gamesActive, $game);
+                if ($game['active']) {
+                    {
+
+                        if($game['player1_id'] != $user->id)
+                            players
+                        array_push($gamesActive, $game);
+                    }
                 } else {
                     array_push($gamesPast, $game);
                 }
             }
         }
-
-        #User::with('author')->orderBy('title')->get();
-
+        //dd($players);
 
 
         $playersAll = User::with('games')->orderBy('name')->get();

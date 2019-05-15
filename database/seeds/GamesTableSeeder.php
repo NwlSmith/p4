@@ -49,7 +49,6 @@ class GamesTableSeeder extends Seeder
             $game->c1 = $gameData[10];
             $game->c2 = $gameData[11];
             $game->c3 = $gameData[12];
-            $game->user_id = $gameData[0];
 
             $game->save();
             $count--;
