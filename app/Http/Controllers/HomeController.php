@@ -89,6 +89,70 @@ class HomeController extends Controller
         ]);
     }
 
+    /*
+     * No need for a create view, you just click a button and the new game is made and sent.
+     * FIX THIS
+     */
+    public function store(Request $request)
+    {
+        dd($request->all());
+
+        # Validate the request data
+        $request->validate([
+            'title' => 'required',
+            'author_id' => 'required',
+            'published_year' => 'required|digits:4',
+            'cover_url' => 'required|url',
+            'purchase_url' => 'required|url'
+        ]);
+
+        # Note: If validation fails, it will redirect the visitor back to the form page
+        # and none of the code that follows will execute.
+
+        //$author = Author::find($request->author_id);
+
+        # Instantiate a new Book Model object
+        $book = new Book();
+
+        # Set the properties
+        # Note how each property corresponds to a field in the table
+        $book->title = $request->title;
+        //$book->author()->associate($author);
+        $book->author_id = $request->author_id;
+
+        $book->published_year = $request->published_year;
+        $book->cover_url = $request->cover_url;
+        $book->purchase_url = $request->purchase_url;
+
+        # Invoke the Eloquent `save` method to generate a new row in the
+        # `books` table, with the above data
+        $book->save();
+
+        return redirect('/books/create')->with(['alert' => 'The book, ' . $book->title . 'was added']);
+    }
+
+    public function edit($id)
+    {
+        $book = Book::find($id);
+
+        $authors = Author::getForDropdown();
+
+        $tags = Tag::getForCheckboxes();
+
+        $bookTags = $book->tags->pluck('id')->toArray();
+
+        if (!$book) {
+            return redirect('/books')->with(['alert' => 'The book you were looking for was not found']);
+        }
+
+        return view('books.edit')->with([
+            'book' => $book,
+            'authors' => $authors,
+            'tags' => $tags,
+            'bookTags' => $bookTags
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $game = Game::find($id);
@@ -169,5 +233,32 @@ class HomeController extends Controller
         $game->save();
 
         return redirect('/' . $id)->with(['alert' => 'Your changes were saved']);
+    }
+
+    public function delete($id)
+    {
+        $book = Book::find($id);
+        if (!$book) {
+            return redirect('/books')->with(['alert' => 'Book not found']);
+        }
+
+        return view('books.delete')->with([
+            'book' => $book,
+        ]);
+    }
+
+    /*
+    * Deletes the book
+    * DELETE /books/{id}/delete
+    */
+    public function destroy($id)
+    {
+        $book = Book::find($id);
+        $book->tags()->detach();
+        $book->delete();
+
+        return redirect('/books')->with([
+            'alert' => '“' . $book->title . '” was removed.'
+        ]);
     }
 }
