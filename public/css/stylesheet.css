@@ -1,42 +1,126 @@
-body {
-    background-color: rgb(240, 240, 240);
-    font-family: Raleway, monospace;
-    color: rgb(5, 5, 5);
-    font-weight: bold;
+:root {/*
+    --textcolor: rgb(5, 5, 5);
+    --alttextcolor: rgb(240, 240, 240);
+    --bgcolor: rgb(240, 240, 240);
+    --altbgcolor: transparent;
+    --vertbordercolor: rgb(5, 5, 5);
+    --altvertbordercolor: rgb(240, 240, 240);
+    --horbordercolor: rgb(240, 240, 240);
+    --althorbordercolor: transparent;
+    */
+    /*
+    --alttextcolor: rgb(5, 5, 5);
+    --textcolor: rgb(240, 240, 240);
+    --altbgcolor: rgb(240, 240, 240);
+    --bgcolor: transparent;
+    --altvertbordercolor: rgb(5, 5, 5);
+    --vertbordercolor: rgb(240, 240, 240);
+    --althorbordercolor: rgb(240, 240, 240);
+    --horbordercolor: transparent;
+    */
+    --boardSquareSize: 200px;
+    --blackColor: rgb(5,5,5);
+    --whiteColor: rgb(240,240,240);
+    --lightGrayColor: rgb(230,230,230);
+    --mediumGrayColor: rgb(220,220,220);
+    --darkGrayColor: rgb(200,200,200);
+}
+
+html {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-    margin: 0;
+}
+
+
+
+
+body {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: var(--whiteColor);
+    font-family: Raleway, monospace;
+    color: rgb(5, 5, 5);
+    font-weight: bold;
+    margin: 2% 5%;
 }
 
 header {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
     text-align: left;
-    height: 100px;
+    height: 106px;
+    width: 100%;
     display: inline-flex;
-    border: 3px solid rgb(5, 5, 5);
+    border: 3px solid var(--blackColor);
+    margin-bottom: 5%;
 }
 
 header h1 {
-    height: 1em;
     margin: .9em .5em 0 .5em;
+    width: 60%;
+}
+
+header h2, header h3 {
+    margin: .1em 0 0 0;
 }
 
 #logo {
     height: 100px;
 }
 
+#accountInfo {
+    /*border-left: 2px solid var(--blackColor);*/
+    float: right;
+    text-align: right;
+    width:28%;
+}
+
 section {
     display: flex;
+}
+
+/* buttons */
+
+.linkButton {
+
+    text-decoration: none;
+    color: var(--blackColor);
+    background-color: var(--whiteColor);
+
+
+    margin-left: 20%;
+    border: 2px solid var(--whiteColor);
+    border-top: 2px solid var(--blackColor);
+    border-bottom: 2px solid var(--blackColor);
+    box-sizing: border-box;
 
 }
+
+.linkButton:hover {
+    background-color: var(--blackColor);
+    color: var(--whiteColor);
+    border: 2px solid var(--whiteColor);
+    border-top: 2px solid var(--blackColor);
+    border-bottom: 2px solid var(--blackColor);
+}
+
+/* Index */
 
 #playersList, #activeList, #finishedList {
     float: left;
     width: 33%;
     border: 3px solid black;
     padding: 5px;
+}
 
+ul {
+    list-style: none;
 }
 
 #playersList {
@@ -45,6 +129,57 @@ section {
 #finishedList {
     clear: right;
 }
+
+/* View */
+
+#board {
+    margin: 0 auto;
+    width: 750px;
+    min-width: 750px;
+}
+
+.boardSquare {
+    height: var(--boardSquareSize);
+    width: var(--boardSquareSize);
+    float: left;
+    border: 0;
+    padding: 0;
+    font-weight: 100;
+    background-color: var(--whiteColor);
+}
+
+button.boardSquare h1 {
+    padding-top: 0;
+    font-family: Raleway;
+}
+
+button.boardSquare {
+    color: transparent;
+}
+
+.boardSquare h1 {
+    font-size: 100px;
+    font-weight: 100;
+    text-align: center;
+    margin: 0;
+    padding-top: 25%;
+}
+
+#a1, #a3, #b2, #c1, #c3 {
+    background-color: var(--lightGrayColor);
+}
+
+
+
+button.boardSquare:hover{
+    background-color: var(--mediumGrayColor) !important;
+    color: var(--darkGrayColor) !important;
+}
+
+/* Game */
+
+
+
 
 footer {
     font-size: small;

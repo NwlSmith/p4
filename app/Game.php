@@ -37,6 +37,11 @@ class Game extends Model
         return ($thisID == $this->player1_id);
     }
 
+    public function getUserNumber($thisID)
+    {
+        return ($this->checkIfPlayer1($thisID) ? '1' : '2');
+    }
+
     public function checkIfUserTurn($thisID)
     {
         return $this->active && (($this->player1_turn && $this->checkIfPlayer1($thisID)) || (!$this->player1_turn && !$this->checkIfPlayer1($thisID)));
@@ -50,5 +55,10 @@ class Game extends Model
     public function checkIfUserIsPlayer($thisID)
     {
         return $this->player1_id != $thisID && $this->player2_id != $thisID;
+    }
+
+    public function checkIfBoardFull()
+    {
+        return ($this->a1 && $this->a2 && $this->a3 && $this->b1 && $this->b2 && $this->b3 && $this->c1 && $this->c2 && $this->c3);
     }
 }

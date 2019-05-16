@@ -30,14 +30,16 @@
         <ul>
             <!-- For loop for each active game, ordered ascending by last move-->
             @foreach($gamesActive as $activeGame)
-            <li id='gamesActive'>
-                <h5>{{ $activeGame->getOtherPlayer($user->id)->name }}</h5>
-                <p class='playerdesc'>
-                    {{ $activeGame->checkIfUserTurn($user->id) ? 'Your turn!' : 'Waiting for other player' }}
-                    Their turn or your turn - special styling if your turn<br>
-                    preview of board?
-                </p>
-            </li>
+                <li id='gamesActive' class='button'>
+                    <a href='/{{$activeGame->id}}' class='gameButton'>
+                        <h5>{{ $activeGame->getOtherPlayer($user->id)->name }}</h5>
+                        <p class='playerdesc'>
+                            {{ $activeGame->checkIfUserTurn($user->id) ? 'Your turn!' : 'Waiting for other player' }}
+                            <br>
+                            preview of board?
+                        </p>
+                    </a>
+                </li>
             @endforeach
         </ul>
     </div>

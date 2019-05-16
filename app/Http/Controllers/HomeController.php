@@ -83,9 +83,20 @@ class HomeController extends Controller
             return redirect('/')->with(['alert' => 'Access denied.']);
         }
 
+        $otherPlayer = $game->getOtherPlayer($user->id);
+
+        if ($game->checkIfUserTurn($user->id)) {
+            return redirect('/' . $id . '/edit')->with([
+                'game' => $game,
+                'user' => $user,
+                'otherPlayer' => $otherPlayer,
+            ]);
+        }
+
         return view('view')->with([
             'game' => $game,
             'user' => $user,
+            'otherPlayer' => $otherPlayer,
         ]);
     }
 
@@ -131,54 +142,68 @@ class HomeController extends Controller
         return redirect('/books/create')->with(['alert' => 'The book, ' . $book->title . 'was added']);
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $book = Book::find($id);
+        $game = Game::find($id);
 
-        $authors = Author::getForDropdown();
-
-        $tags = Tag::getForCheckboxes();
-
-        $bookTags = $book->tags->pluck('id')->toArray();
-
-        if (!$book) {
-            return redirect('/books')->with(['alert' => 'The book you were looking for was not found']);
+        if (!$game) {
+            return redirect('/')->with(['alert' => 'The game you were looking for was not found']);
         }
 
-        return view('books.edit')->with([
-            'book' => $book,
-            'authors' => $authors,
-            'tags' => $tags,
-            'bookTags' => $bookTags
+        $user = $request->user();
+
+        if ($game->checkIfUserIsPlayer($user->id)) {
+            return redirect('/')->with(['alert' => 'Access denied.']);
+        }
+
+        $otherPlayer = $game->getOtherPlayer($user->id);
+
+        if (!$game->checkIfUserTurn($user->id)) {
+            return redirect('/' . $id)->with([
+                'game' => $game,
+                'user' => $user,
+                'otherPlayer' => $otherPlayer,
+                'alert' => 'It is not your turn',
+            ]);
+        }
+
+        return view('play')->with([
+            'game' => $game,
+            'user' => $user,
+            'otherPlayer' => $otherPlayer,
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $game = Game::find($id);
+        $user = $request->user();
 
         # Set the properties
         # Note how each property corresponds to a field in the table
         $game->player1_turn = !$game->player1_turn;
-        $a1 = $request->a1;
-        $a2 = $request->a2;
-        $a3 = $request->a3;
-        $b1 = $request->b1;
-        $b2 = $request->b2;
-        $b3 = $request->b3;
-        $c1 = $request->c1;
-        $c2 = $request->c2;
-        $c3 = $request->c3;
+        $a1 = $game->a1;
+        $a2 = $game->a2;
+        $a3 = $game->a3;
+        $b1 = $game->b1;
+        $b2 = $game->b2;
+        $b3 = $game->b3;
+        $c1 = $game->c1;
+        $c2 = $game->c2;
+        $c3 = $game->c3;
 
-        $game->a1 = $a1;
-        $game->a2 = $a2;
-        $game->a3 = $a3;
-        $game->b1 = $b1;
-        $game->b2 = $b2;
-        $game->b3 = $b3;
-        $game->c1 = $c1;
-        $game->c2 = $c2;
-        $game->c3 = $c3;
+        $button = $request->button;
+        $game->$button = $game->getUserNumber($user->id);
+
+        $a1 = $game->a1;
+        $a2 = $game->a2;
+        $a3 = $game->a3;
+        $b1 = $game->b1;
+        $b2 = $game->b2;
+        $b3 = $game->b3;
+        $c1 = $game->c1;
+        $c2 = $game->c2;
+        $c3 = $game->c3;
 
         #calculate if winner
         $winner = 0;
@@ -220,19 +245,35 @@ class HomeController extends Controller
             }
         }
 
-        if ($winner)
-        {
-            dump('woah you actually won!');
 
-            $game->winner = $winner;
+        $alert = 'Move succeeded';
+
+        if ($winner) {
+
+            $game->winner = $user->id;
             $game->active = false;
+            $user->wins++;
+            $user->save();
+            $otherPlayer = $game->getOtherPlayer($user->id);
+            $otherPlayer->losses++;
+            $otherPlayer->save();
+            $alert = 'You win!';
+            dd('You won');
         }
 
         # Invoke the Eloquent `save` method to generate a new row in the
         # `books` table, with the above data
         $game->save();
 
-        return redirect('/' . $id)->with(['alert' => 'Your changes were saved']);
+        if (!$winner && $game->checkIfBoardFull())
+        {
+            $alert='Draw! Game will be deleted';
+            dd('Draw, deleting');
+        }
+
+        dd('neither draw nor win');
+
+        return redirect('/' . $id)->with(['alert' => $alert]);
     }
 
     public function delete($id)

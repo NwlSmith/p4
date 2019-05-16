@@ -25,6 +25,7 @@ class GameUserTableSeeder extends Seeder
             [1, 3],
             [1, 4],
             [4, 1],
+            [2, 4],
         ];
 
         # Now loop through the above array, creating a new pivot for each book to tag
