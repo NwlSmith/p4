@@ -170,7 +170,7 @@ a {
 
 #gamePage {
     display: inline-block;
-
+    text-align: center;
     width: 100%;
 }
 
@@ -228,6 +228,10 @@ button.boardSquare:hover {
 }
 
 /* Game */
+
+#login {
+    font-size: large;
+}
 
 
 footer {
