@@ -17,15 +17,15 @@ class CreateGamesTable extends Migration
             $table->boolean('player1_turn')->default(false); # default to false, challenger goes second
             # rows and columns of the game itself.
             # 0 = empty, 1 = player1, 2 = player2
-            $table->unsignedTinyInteger('a1');
-            $table->unsignedTinyInteger('a2');
-            $table->unsignedTinyInteger('a3');
-            $table->unsignedTinyInteger('b1');
-            $table->unsignedTinyInteger('b2');
-            $table->unsignedTinyInteger('b3');
-            $table->unsignedTinyInteger('c1');
-            $table->unsignedTinyInteger('c2');
-            $table->unsignedTinyInteger('c3');
+            $table->unsignedTinyInteger('a1')->default(0);
+            $table->unsignedTinyInteger('a2')->default(0);
+            $table->unsignedTinyInteger('a3')->default(0);
+            $table->unsignedTinyInteger('b1')->default(0);
+            $table->unsignedTinyInteger('b2')->default(0);
+            $table->unsignedTinyInteger('b3')->default(0);
+            $table->unsignedTinyInteger('c1')->default(0);
+            $table->unsignedTinyInteger('c2')->default(0);
+            $table->unsignedTinyInteger('c3')->default(0);
             $table->unsignedTinyInteger('winner')->default(0);
         });
     }

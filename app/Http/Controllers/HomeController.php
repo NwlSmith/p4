@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App;
 use App\Game;
 use App\User;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -97,6 +98,7 @@ class HomeController extends Controller
             'game' => $game,
             'user' => $user,
             'otherPlayer' => $otherPlayer,
+            'alert' => 'It is not your turn',
         ]);
     }
 
@@ -106,40 +108,27 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        # Instantiate a new Game Model object
+        $game = new Game();
+        $user = $request->user();
 
-        # Validate the request data
-        $request->validate([
-            'title' => 'required',
-            'author_id' => 'required',
-            'published_year' => 'required|digits:4',
-            'cover_url' => 'required|url',
-            'purchase_url' => 'required|url'
+        $game->created_at = Carbon::now()->toDateTimeString();
+        $game->updated_at = Carbon::now()->toDateTimeString();
+
+        $game->player1_id = $user->id;
+        $otherPlayer = User::find($request->player);
+        $game->player2_id = $request->player;
+
+        $game->save();
+        $game->users()->save($user);
+        $game->users()->save($otherPlayer);
+
+        return redirect('/' . $game->id)->with([
+            'game' => $game,
+            'user' => $user,
+            'otherPlayer' => $otherPlayer,
+            'alert' => 'It is not your turn',
         ]);
-
-        # Note: If validation fails, it will redirect the visitor back to the form page
-        # and none of the code that follows will execute.
-
-        //$author = Author::find($request->author_id);
-
-        # Instantiate a new Book Model object
-        $book = new Book();
-
-        # Set the properties
-        # Note how each property corresponds to a field in the table
-        $book->title = $request->title;
-        //$book->author()->associate($author);
-        $book->author_id = $request->author_id;
-
-        $book->published_year = $request->published_year;
-        $book->cover_url = $request->cover_url;
-        $book->purchase_url = $request->purchase_url;
-
-        # Invoke the Eloquent `save` method to generate a new row in the
-        # `books` table, with the above data
-        $book->save();
-
-        return redirect('/books/create')->with(['alert' => 'The book, ' . $book->title . 'was added']);
     }
 
     public function edit(Request $request, $id)
@@ -245,11 +234,9 @@ class HomeController extends Controller
             }
         }
 
-
         $alert = 'Move succeeded';
 
         if ($winner) {
-
             $game->winner = $user->id;
             $game->active = false;
             $user->wins++;
@@ -258,48 +245,20 @@ class HomeController extends Controller
             $otherPlayer->losses++;
             $otherPlayer->save();
             $alert = 'You win!';
-            dd('You won');
         }
 
         # Invoke the Eloquent `save` method to generate a new row in the
         # `books` table, with the above data
         $game->save();
 
-        if (!$winner && $game->checkIfBoardFull())
-        {
-            $alert='Draw! Game will be deleted';
-            dd('Draw, deleting');
+        if (!$winner && $game->checkIfBoardFull()) {
+            $alert = 'Game ended in a draw, deleting...';
+            $game->users()->detach();
+            $game->delete();
         }
 
-        dd('neither draw nor win');
-
-        return redirect('/' . $id)->with(['alert' => $alert]);
-    }
-
-    public function delete($id)
-    {
-        $book = Book::find($id);
-        if (!$book) {
-            return redirect('/books')->with(['alert' => 'Book not found']);
-        }
-
-        return view('books.delete')->with([
-            'book' => $book,
-        ]);
-    }
-
-    /*
-    * Deletes the book
-    * DELETE /books/{id}/delete
-    */
-    public function destroy($id)
-    {
-        $book = Book::find($id);
-        $book->tags()->detach();
-        $book->delete();
-
-        return redirect('/books')->with([
-            'alert' => '“' . $book->title . '” was removed.'
-        ]);
+        return redirect('/' . $id)->with([
+            'user' => $user,
+            'alert' => $alert]);
     }
 }

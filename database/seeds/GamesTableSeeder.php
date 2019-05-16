@@ -24,7 +24,7 @@ class GamesTableSeeder extends Seeder
             [ 4, 5, true, true, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0], # 4
             [ 5, 1, true, false, 2, 1, 1, 0, 2, 0, 0, 0, 0, 0], # 5
             [ 1, 3, true, false, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0], # 6
-            [ 1, 4, false, false, 2, 1, 1, 0, 2, 0, 0, 0, 2, 1], # 7
+            [ 1, 4, false, false, 2, 1, 1, 0, 2, 0, 0, 0, 2, 2], # 7
             [ 2, 4, true, true, 2, 1, 1, 1, 2, 2, 0, 2, 1, 0], # 8
         ];
 

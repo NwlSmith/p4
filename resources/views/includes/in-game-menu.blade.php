@@ -1,6 +1,6 @@
 <div id='menu'>
-    <a href='/'>
-        <div>Return</div>
+    <a href='/' class='linkButton'>
+        Return
     </a><br>
     @if ($game->checkIfPlayer1($user->id))
         <h3>

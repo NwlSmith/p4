@@ -42,7 +42,6 @@ Route::get('/show-login-status', function () {
  */
 Route::group(['middleware' => 'auth'], function () {
     # Create a game
-    Route::get('/new', 'HomeController@create');
     Route::post('/', 'HomeController@store');
 
     Route::get('/', 'HomeController@index');
@@ -53,8 +52,4 @@ Route::group(['middleware' => 'auth'], function () {
     # Edit a game
     Route::get('/{id}/edit', 'HomeController@edit');
     Route::put('/{id}', 'HomeController@update');
-
-    # Delete a book
-    Route::get('/{id}/delete', 'HomeController@delete');
-    Route::delete('/{id}', 'HomeController@destroy');
 });

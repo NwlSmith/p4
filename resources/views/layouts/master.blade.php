@@ -33,6 +33,11 @@
 </header>
 
 <section>
+    @if(session('alert'))
+        <div id='alert'>
+            {{ session('alert') }}
+        </div>
+    @endif
     @yield('content')
 </section>
 

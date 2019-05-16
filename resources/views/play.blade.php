@@ -5,12 +5,13 @@
 @endsection
 
 @section('content')
+    <div id='gamePage'>
+        <h2>Your turn</h2>
+        @include('includes.in-game-menu', ['game' => $game, 'user' => $user])
 
-    @include('includes.in-game-menu', ['game' => $game, 'user' => $user])
-
-    <form id='board' method='POST' action='/{{ $game->id }}'>
-        {{ csrf_field() }}
-        {{ method_field('put') }}
+        <form id='board' method='POST' action='/{{ $game->id }}'>
+            {{ csrf_field() }}
+            {{ method_field('put') }}
 
 
             @include('includes.board-button', ['square' => 'a1', 'value' => $game->a1])
@@ -23,6 +24,7 @@
             @include('includes.board-button', ['square' => 'c2', 'value' => $game->c2])
             @include('includes.board-button', ['square' => 'c3', 'value' => $game->c3])
 
-    </form>
+        </form>
+    </div>
 
 @endsection

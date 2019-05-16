@@ -49,7 +49,7 @@ class Game extends Model
 
     public function checkIfUserWon($thisID)
     {
-        return !$this->active && $this->winner == $thisID;
+        return !$this->active && $this->winner == $this->getUserNumber($thisID);
     }
 
     public function checkIfUserIsPlayer($thisID)

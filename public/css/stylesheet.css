@@ -1,13 +1,14 @@
-:root {/*
-    --textcolor: rgb(5, 5, 5);
-    --alttextcolor: rgb(240, 240, 240);
-    --bgcolor: rgb(240, 240, 240);
-    --altbgcolor: transparent;
-    --vertbordercolor: rgb(5, 5, 5);
-    --altvertbordercolor: rgb(240, 240, 240);
-    --horbordercolor: rgb(240, 240, 240);
-    --althorbordercolor: transparent;
-    */
+:root {
+    /*
+        --textcolor: rgb(5, 5, 5);
+        --alttextcolor: rgb(240, 240, 240);
+        --bgcolor: rgb(240, 240, 240);
+        --altbgcolor: transparent;
+        --vertbordercolor: rgb(5, 5, 5);
+        --altvertbordercolor: rgb(240, 240, 240);
+        --horbordercolor: rgb(240, 240, 240);
+        --althorbordercolor: transparent;
+        */
     /*
     --alttextcolor: rgb(5, 5, 5);
     --textcolor: rgb(240, 240, 240);
@@ -19,11 +20,11 @@
     --horbordercolor: transparent;
     */
     --boardSquareSize: 200px;
-    --blackColor: rgb(5,5,5);
-    --whiteColor: rgb(240,240,240);
-    --lightGrayColor: rgb(230,230,230);
-    --mediumGrayColor: rgb(220,220,220);
-    --darkGrayColor: rgb(200,200,200);
+    --blackColor: rgb(5, 5, 5);
+    --whiteColor: rgb(240, 240, 240);
+    --lightGrayColor: rgb(230, 230, 230);
+    --mediumGrayColor: rgb(220, 220, 220);
+    --darkGrayColor: rgb(200, 200, 200);
 }
 
 html {
@@ -32,8 +33,6 @@ html {
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 }
-
-
 
 
 body {
@@ -78,23 +77,29 @@ header h2, header h3 {
     /*border-left: 2px solid var(--blackColor);*/
     float: right;
     text-align: right;
-    width:28%;
+    width: 28%;
 }
 
-section {
+#indexPage {
     display: flex;
+}
+
+#alert {
+    text-align: center;
+    color: red;
+    font-weight: bold;
 }
 
 /* buttons */
 
 .linkButton {
-
+    padding: 0 4px;
+    font-family: Raleway;
+    font-weight: bold;
     text-decoration: none;
     color: var(--blackColor);
     background-color: var(--whiteColor);
 
-
-    margin-left: 20%;
     border: 2px solid var(--whiteColor);
     border-top: 2px solid var(--blackColor);
     border-bottom: 2px solid var(--blackColor);
@@ -103,11 +108,14 @@ section {
 }
 
 .linkButton:hover {
-    background-color: var(--blackColor);
+    /*background-color: var(--lightGrayColor);
     color: var(--whiteColor);
-    border: 2px solid var(--whiteColor);
-    border-top: 2px solid var(--blackColor);
-    border-bottom: 2px solid var(--blackColor);
+    border: 2px solid var(--blackColor);
+    border-top: 2px solid var(--whiteColor);
+    border-bottom: 2px solid var(--whiteColor);*/
+    color: var(--mediumGrayColor);
+    border-top: 2px solid var(--mediumGrayColor);
+    border-bottom: 2px solid var(--mediumGrayColor);
 }
 
 /* Index */
@@ -115,15 +123,43 @@ section {
 #playersList, #activeList, #finishedList {
     float: left;
     width: 33%;
-    border: 3px solid black;
     padding: 5px;
+}
+
+#activeList ul li, #finishedList ul li {
+    margin: 2% 0;
+    padding-bottom: 1%;
+    border-bottom: 1px solid var(--blackColor);
+}
+
+h3 {
+    margin: 0;
+    color: var(--blackColor);;
+}
+
+.playerdesc {
+    color: var(--blackColor);
+    margin:0;
+
 }
 
 ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
 }
 
 #playersList {
+}
+
+#activeList {
+    border: 2px solid var(--blackColor);
+    border-top: 2px solid var(--whiteColor);
+    border-bottom: 2px solid var(--whiteColor);
 }
 
 #finishedList {
@@ -132,10 +168,22 @@ ul {
 
 /* View */
 
+#gamePage {
+    display: inline-block;
+
+    width: 100%;
+}
+
+#gamePage h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
 #board {
     margin: 0 auto;
-    width: 750px;
-    min-width: 750px;
+    width: 600px;
+    height: 600px;
+    min-width: 600px;
 }
 
 .boardSquare {
@@ -170,15 +218,16 @@ button.boardSquare {
 }
 
 
-
-button.boardSquare:hover{
+button.boardSquare:hover {
     background-color: var(--mediumGrayColor) !important;
     color: var(--darkGrayColor) !important;
 }
 
+#menu {
+    text-align: center;
+}
+
 /* Game */
-
-
 
 
 footer {
