@@ -18,3 +18,10 @@
 + My application has 2 tables in total (`users`, `games`)
 + There's a many-to-many relationship between `users` and `games`
     
+## Notes
+
++ So you can more easily see the features of this application without creating several accounts, the emails of the other players are:
+  + a@a.com
+  + b@b.com
+  + c@c.com
++ Each password is 'helloworld'
