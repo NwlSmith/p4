@@ -42,9 +42,7 @@
                         <a href='/{{$activeGame->id}}' class='gameButton'>
                             <h3>{{ $activeGame->getOtherPlayer($user->id)->name }}</h3>
                             <p class='playerdesc'>
-                                {{ $activeGame->checkIfUserTurn($user->id) ? 'Your turn!' : 'Waiting for other player' }}
-                                <br>
-                                preview of board?
+                                {{ $activeGame->checkIfUserTurn($user->id) ? 'Your turn!' : 'Waiting for other player...' }}
                             </p>
                         </a>
                     </li>
@@ -63,8 +61,6 @@
                             <h3>{{ $pastGame->getOtherPlayer($user->id)->name }}</h3>
                             <p class='playerdesc'>
                                 {{ $pastGame->checkIfUserWon($user->id) ? 'You Won!' : 'You Lost' }}
-                                <br>
-                                preview of board?
                             </p>
                         </a>
                     </li>
